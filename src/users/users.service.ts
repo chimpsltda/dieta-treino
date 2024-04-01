@@ -1,18 +1,20 @@
 import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { DatabaseService } from 'src/database/database.service';
+import { CreateUserDTO } from './dto/create.users.dto';
+import { UpdateUserDto } from './dto/update.users.dto';
 
 @Injectable()
 export class UsersService {
   constructor(private readonly databaseservice: DatabaseService) {}
 
-  async create(createUserDto: Prisma.UsersCreateInput) {
+  async create(createUserDto: CreateUserDTO) {
     return this.databaseservice.users.create({
       data: createUserDto
     });
   }
 
-  async findOneCode(id: number) {
+  async findOneCode(id: number): Promise<Prisma.UsersWhereUniqueInput| undefined> {
     return this.databaseservice.users.findUnique({
       where: {
         codigo: id,
@@ -20,7 +22,7 @@ export class UsersService {
     });
   }
 
-  async findOneEmail(email: string){
+  async findOneEmail(email: string): Promise<Prisma.UsersWhereUniqueInput| undefined>{
     return this.databaseservice.users.findUnique({
       where: {
         email: email
@@ -28,7 +30,7 @@ export class UsersService {
     })
   }
 
-  async update(id: number, updateUserDto: Prisma.UsersUpdateInput) {
+  async update(id: number, updateUserDto: UpdateUserDto) {
     return this.databaseservice.users.update({
       where: {
         codigo: id,
