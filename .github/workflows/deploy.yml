@@ -29,7 +29,7 @@ jobs:
           node-version: lts/*
 
       - name: Install step
-        run: "npx prisma generate && npm install"
+        run: "npx prisma generate  --schema=src/prisma/schema.prisma  && npx prisma generate && npm install"
 
       - name: Build step
         run: "npm run start"
