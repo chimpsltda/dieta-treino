@@ -39,4 +39,4 @@ jobs:
         with:
           project: "dieta-trein-28"
           entrypoint: ""
-          root: ""
+          root: "https://github.com/chimpsltda/dieta-treino/tree/main/src"
