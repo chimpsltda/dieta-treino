@@ -38,5 +38,5 @@ jobs:
         uses: denoland/deployctl@v1
         with:
           project: "dieta-trein-28"
-          entrypoint: "https://github.com/chimpsltda/dieta-treino/tree/main/src"
-          root: "https://github.com/chimpsltda/dieta-treino/tree/main/src"
+          entrypoint: ""
+          root: ""
