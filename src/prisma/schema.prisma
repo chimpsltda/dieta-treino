@@ -3,6 +3,8 @@
 
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+const DATABASE_URL = process.env.DATABASE_URL
+const DATABASE_URL_UNPOOLED = process.env.DATABASE_URL_UNPOOLED
 
 generator client {
   provider = "prisma-client-js"
@@ -10,8 +12,8 @@ generator client {
 
 datasource db {
   provider  = "postgresql"
-  url  	    = configService.get("DATABASE_URL")
-  directUrl = configService.get("DATABASE_URL_UNPOOLED")
+  url  	    = DATABASE_URL
+  directUrl = DATABASE_URL_UNPOOLED
 }
 
 model Users{
