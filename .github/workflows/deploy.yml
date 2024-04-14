@@ -37,6 +37,6 @@ jobs:
       - name: Upload to Deno Deploy
         uses: denoland/deployctl@v1
         with:
-          project: "dieta-trein-28"
+          project: "bruno-dieta-trein-93"
           entrypoint: "https://github.com/chimpsltda/dieta-treino/tree/main/src/main.ts"
           root: "https://github.com/chimpsltda/dieta-treino/tree/main/"
