@@ -29,10 +29,10 @@ jobs:
           node-version: lts/*
 
       - name: Install step
-        run: " npm install && npx prisma generate --schema=prisma/schema.prisma "
+        run: " npm install && npx prisma generate"
 
       - name: Build step
-        run: "npx prisma migrate deploy && npm run start:prod"
+        run: "npx prisma migrate deploy --schema=prisma/schema.prisma  && npm run start:prod"
 
       - name: Upload to Deno Deploy
         uses: denoland/deployctl@v1
