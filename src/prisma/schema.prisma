@@ -10,10 +10,8 @@ generator client {
 
 datasource db {
   provider  = "postgresql"
-//url  	    = env("DATABASE_URL")
-//directUrl = env("DATABASE_URL_UNPOOLED")
-  url  	    = Deno.env.DATABASE_URL
-  directUrl = Deno.env.DATABASE_URL_UNPOOLED
+  url  	    = env("DATABASE_URL")
+  directUrl = env("DATABASE_URL_UNPOOLED")
 }
 
 model Users{
