@@ -32,7 +32,7 @@ jobs:
         run: " npm install"
 
       - name: Build step
-        run: "npx prisma migrate deploy && npm run start"
+        run: "npx prisma migrate deploy --schema=prisma/schema.prisma && npm run start"
 
       - name: Upload to Deno Deploy
         uses: denoland/deployctl@v1
