@@ -29,14 +29,11 @@ jobs:
           node-version: lts/*
 
       - name: Install step
-        run: " npm install"
-
-      - name: Build step
-        run: "npx prisma migrate deploy --schema=src/prisma/schema.prisma  && npm run start:prod"
+        run: "npm install"
 
       - name: Upload to Deno Deploy
         uses: denoland/deployctl@v1
         with:
-          project: "dieta-trein-28"
-          entrypoint: "https://github.com/chimpsltda/dieta-treino/tree/main/src/main.ts"
-          root: "https://github.com/chimpsltda/dieta-treino/tree/main/"
+          project: "bruno-dieta-trein-93"
+          entrypoint: "main.ts"
+          root: ""
