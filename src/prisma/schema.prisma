@@ -10,8 +10,9 @@ generator client {
 
 datasource db {
   provider  = "postgresql"
-  url  	    = env("DATABASE_URL")
-  //directUrl = env("DATABASE_URL_UNPOOLED")
+  url  	    = "postgresql://dieta_owner:WBI4cjNAO6DR@ep-damp-recipe-a52xvn2f-pooler.us-east-2.aws.neon.tech/dieta?sslmode=require"
+  //directUrl = "postgresql://dieta_owner:WBI4cjNAO6DR@ep-damp-recipe-a52xvn2f.us-east-2.aws.neon.tech/dieta?sslmode=require"
+
 }
 
 model Users{
