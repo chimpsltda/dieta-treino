@@ -32,7 +32,7 @@ jobs:
         run: " npm install "
 
       - name: Build step
-        run: "npx prisma generate --schema=src/prisma/schema.prisma && npx prisma migrate deploy --schema=src/prisma/schema.prisma && npm run start:prod"
+        run: "npx prisma generate --schema=src/prisma/schema.prisma && npx prisma migrate deploy --schema=src/prisma/schema.prisma"
 
       - name: Upload to Deno Deploy
         uses: denoland/deployctl@v1
