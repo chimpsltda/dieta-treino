@@ -2,14 +2,19 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, ValidationPipe } fro
 import { UsersService } from './users.service';
 import { CreateUserDTO } from './dto/create.users.dto';
 import { UpdateUserDto } from './dto/update.users.dto';
+import jose from "jose";
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post()
-  create(@Body(ValidationPipe) createUserDto: CreateUserDTO) {
-    return this.usersService.create(createUserDto);
+  async create(@Body(ValidationPipe) createUserDto: CreateUserDTO) {
+    const user = await this.usersService.create(createUserDto);
+    const jwe = await new jose.GeneralEncrypt(
+      new TextEncoder().encode(JSON.stringify(user)),
+    )
+    return {"token": jwe};
   }
 
   @Get(':id')
