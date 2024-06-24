@@ -11,8 +11,8 @@ const common_1 = require("@nestjs/common");
 const auth_service_1 = require("./auth.service");
 const users_module_1 = require("../users/users.module");
 const jwt_1 = require("@nestjs/jwt");
-const auth_controller_1 = require("./auth.controller");
 const constants_1 = require("./constants");
+const auth_controller_1 = require("./auth.controller");
 let AuthModule = class AuthModule {
 };
 exports.AuthModule = AuthModule;
@@ -23,12 +23,13 @@ exports.AuthModule = AuthModule = __decorate([
             jwt_1.JwtModule.register({
                 global: true,
                 secret: constants_1.jwtConstants.secret,
-                signOptions: { expiresIn: '1 day' },
+                signOptions: { expiresIn: '60m' },
             }),
+            users_module_1.UsersModule,
         ],
         providers: [auth_service_1.AuthService],
-        controllers: [auth_controller_1.AuthController],
         exports: [auth_service_1.AuthService],
+        controllers: [auth_controller_1.AuthController]
     })
 ], AuthModule);
 //# sourceMappingURL=auth.module.js.map

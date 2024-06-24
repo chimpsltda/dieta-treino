@@ -2,34 +2,56 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, ValidationPipe } fro
 import { UsersService } from './users.service';
 import { CreateUserDTO } from './dto/create.users.dto';
 import { UpdateUserDto } from './dto/update.users.dto';
-import jose from "jose";
+import { AuthService } from 'src/auth/auth.service';
+import { JwtService } from '@nestjs/jwt';
 
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(
+    private readonly usersService: UsersService,
+    private readonly authService: AuthService,
+    private readonly jwtService: JwtService
+  ) {}
 
   @Post()
   async create(@Body(ValidationPipe) createUserDto: CreateUserDTO) {
     const user = await this.usersService.create(createUserDto);
-    const jwe = await new jose.GeneralEncrypt(
-      new TextEncoder().encode(JSON.stringify(user)),
-    )
-    return {"token": jwe};
+    const encryptedUser = this.authService.simpleEncrypt(JSON.stringify(user));
+    return { encryptedUser: encodeURIComponent(encryptedUser) };
   }
 
-  @Get(':id')
-  findOneCodigo(@Param('id') id: string) {
-    return this.usersService.findOneCode(+id);
+  @Get(':token')
+  async findOneCodigo(@Param('token') token: string) {
+    const decryptedData = this.authService.simpleDecrypt(decodeURIComponent(token));
+    console.log('Decrypted Data:', decryptedData);  // Adicionar log para verificar a saída
+    const payload = this.jwtService.decode(decryptedData);  // Decodificar o token JWT
+    if (typeof payload !== 'object' || payload === null) {
+      throw new Error('Invalid token payload');
+    }
+    const userId = payload.sub;  // Use 'sub' se você está buscando o ID do usuário no token JWT
+    return this.usersService.findOneCode(userId);
   }
 
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body(ValidationPipe) updateUserDto: UpdateUserDto) {
-    return this.usersService.update(+id, updateUserDto);
+  @Patch(':token')
+  async update(@Param('token') token: string, @Body(ValidationPipe) updateUserDto: UpdateUserDto) {
+    const decryptedData = this.authService.simpleDecrypt(decodeURIComponent(token));
+    const payload = this.jwtService.decode(decryptedData);
+    if (typeof payload !== 'object' || payload === null) {
+      throw new Error('Invalid token payload');
+    }
+    const userId = payload.sub;
+    return this.usersService.update(userId, updateUserDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.usersService.remove(+id);
+  @Delete(':token')
+  async remove(@Param('token') token: string) {
+    const decryptedData = this.authService.simpleDecrypt(decodeURIComponent(token));
+    const payload = this.jwtService.decode(decryptedData);
+    if (typeof payload !== 'object' || payload === null) {
+      throw new Error('Invalid token payload');
+    }
+    const userId = payload.sub;
+    return this.usersService.remove(userId);
   }
 }

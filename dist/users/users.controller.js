@@ -17,21 +17,46 @@ const common_1 = require("@nestjs/common");
 const users_service_1 = require("./users.service");
 const create_users_dto_1 = require("./dto/create.users.dto");
 const update_users_dto_1 = require("./dto/update.users.dto");
+const auth_service_1 = require("../auth/auth.service");
+const jwt_1 = require("@nestjs/jwt");
 let UsersController = class UsersController {
-    constructor(usersService) {
+    constructor(usersService, authService, jwtService) {
         this.usersService = usersService;
+        this.authService = authService;
+        this.jwtService = jwtService;
     }
-    create(createUserDto) {
-        return this.usersService.create(createUserDto);
+    async create(createUserDto) {
+        const user = await this.usersService.create(createUserDto);
+        const encryptedUser = this.authService.simpleEncrypt(JSON.stringify(user));
+        return { encryptedUser: encodeURIComponent(encryptedUser) };
     }
-    findOneCodigo(id) {
-        return this.usersService.findOneCode(+id);
+    async findOneCodigo(token) {
+        const decryptedData = this.authService.simpleDecrypt(decodeURIComponent(token));
+        console.log('Decrypted Data:', decryptedData);
+        const payload = this.jwtService.decode(decryptedData);
+        if (typeof payload !== 'object' || payload === null) {
+            throw new Error('Invalid token payload');
+        }
+        const userId = payload.sub;
+        return this.usersService.findOneCode(userId);
     }
-    update(id, updateUserDto) {
-        return this.usersService.update(+id, updateUserDto);
+    async update(token, updateUserDto) {
+        const decryptedData = this.authService.simpleDecrypt(decodeURIComponent(token));
+        const payload = this.jwtService.decode(decryptedData);
+        if (typeof payload !== 'object' || payload === null) {
+            throw new Error('Invalid token payload');
+        }
+        const userId = payload.sub;
+        return this.usersService.update(userId, updateUserDto);
     }
-    remove(id) {
-        return this.usersService.remove(+id);
+    async remove(token) {
+        const decryptedData = this.authService.simpleDecrypt(decodeURIComponent(token));
+        const payload = this.jwtService.decode(decryptedData);
+        if (typeof payload !== 'object' || payload === null) {
+            throw new Error('Invalid token payload');
+        }
+        const userId = payload.sub;
+        return this.usersService.remove(userId);
     }
 };
 exports.UsersController = UsersController;
@@ -40,32 +65,34 @@ __decorate([
     __param(0, (0, common_1.Body)(common_1.ValidationPipe)),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_users_dto_1.CreateUserDTO]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], UsersController.prototype, "create", null);
 __decorate([
-    (0, common_1.Get)(':id'),
-    __param(0, (0, common_1.Param)('id')),
+    (0, common_1.Get)(':token'),
+    __param(0, (0, common_1.Param)('token')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], UsersController.prototype, "findOneCodigo", null);
 __decorate([
-    (0, common_1.Patch)(':id'),
-    __param(0, (0, common_1.Param)('id')),
+    (0, common_1.Patch)(':token'),
+    __param(0, (0, common_1.Param)('token')),
     __param(1, (0, common_1.Body)(common_1.ValidationPipe)),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, update_users_dto_1.UpdateUserDto]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], UsersController.prototype, "update", null);
 __decorate([
-    (0, common_1.Delete)(':id'),
-    __param(0, (0, common_1.Param)('id')),
+    (0, common_1.Delete)(':token'),
+    __param(0, (0, common_1.Param)('token')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], UsersController.prototype, "remove", null);
 exports.UsersController = UsersController = __decorate([
     (0, common_1.Controller)('users'),
-    __metadata("design:paramtypes", [users_service_1.UsersService])
+    __metadata("design:paramtypes", [users_service_1.UsersService,
+        auth_service_1.AuthService,
+        jwt_1.JwtService])
 ], UsersController);
 //# sourceMappingURL=users.controller.js.map

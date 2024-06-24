@@ -1,6 +1,5 @@
-import { Body, Controller, Get, HttpCode, HttpStatus, Post, Request, UseGuards } from '@nestjs/common';
+import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { AuthGuard } from './auth.guard';
 import { LoginAuthDTO } from './dto/login.auth.dto';
 
 @Controller('auth')
@@ -9,13 +8,8 @@ export class AuthController {
 
   @HttpCode(HttpStatus.OK)
   @Post('login')
-  signIn(@Body() signInDto: LoginAuthDTO) {
-    return this.authService.signIn(signInDto);
-  }
-
-  @UseGuards(AuthGuard)
-  @Get('profile')
-  getProfile(@Request() req) {
-    return req.user;
+  async signIn(@Body() signInDto: LoginAuthDTO) {
+    const result = await this.authService.signIn(signInDto);
+    return result; // Retorna diretamente o objeto result contendo o token encriptado
   }
 }

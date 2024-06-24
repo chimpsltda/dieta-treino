@@ -5,5 +5,7 @@ export declare class AuthService {
     private usersService;
     private jwtService;
     constructor(usersService: UsersService, jwtService: JwtService);
-    signIn(loginauth: LoginAuthDTO): Promise<any>;
+    signIn(loginAuthDto: LoginAuthDTO): Promise<any>;
+    simpleEncrypt(text: string): string;
+    simpleDecrypt(encryptedText: string): string;
 }

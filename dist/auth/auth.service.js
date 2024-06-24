@@ -19,15 +19,23 @@ let AuthService = class AuthService {
         this.usersService = usersService;
         this.jwtService = jwtService;
     }
-    async signIn(loginauth) {
-        const user = await this.usersService.findOneEmail(loginauth['email']);
-        if (user?.senha !== loginauth['senha']) {
+    async signIn(loginAuthDto) {
+        const user = await this.usersService.findOneEmail(loginAuthDto.email);
+        if (!user || user.senha !== loginAuthDto.senha) {
             throw new common_1.UnauthorizedException();
         }
-        const payload = { sub: user.codigo, username: user.nome };
-        return {
-            access_token: await this.jwtService.signAsync(payload, { secret: constants_1.jwtConstants.secret }),
-        };
+        const payload = { email: user.email, sub: user.codigo };
+        const token = await this.jwtService.signAsync(payload, {
+            secret: constants_1.jwtConstants.secret,
+        });
+        const encryptedToken = this.simpleEncrypt(token);
+        return { access_token: encodeURIComponent(encryptedToken) };
+    }
+    simpleEncrypt(text) {
+        return text.split('').map(char => String.fromCharCode(char.charCodeAt(0) + 3)).join('');
+    }
+    simpleDecrypt(encryptedText) {
+        return encryptedText.split('').map(char => String.fromCharCode(char.charCodeAt(0) - 3)).join('');
     }
 };
 exports.AuthService = AuthService;
