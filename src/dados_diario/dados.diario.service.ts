@@ -46,6 +46,19 @@ export class DadosDiarioService {
     });
   }
 
+  async update(codigo: number, updateDadoDiarioDto: UpdateDadoDiarioDto): Promise<DadosDiario> {
+    return this.databaseservice.dadosDiario.update({
+      where: { codigo },
+      data: updateDadoDiarioDto,
+    });
+  }
+
+  async remove(codigo: number): Promise<DadosDiario> {
+    return this.databaseservice.dadosDiario.delete({
+      where: { codigo },
+    });
+  }
+
   async showall(): Promise<DadosDiario[]> {
     return this.databaseservice.dadosDiario.findMany();
   }

@@ -15,15 +15,17 @@ export class DadosDiarioController {
       hoje.setHours(0, 0, 0, 0);
       createDadoDiarioDTO.data_atual = hoje;
     }
-    return this.dadosdiarioService.insert(createDadoDiarioDTO)
+    return this.dadosdiarioService.insert(createDadoDiarioDTO);
   }
 
   @Get(':id')
-  async findOneCodigo(@Param('id') id: string) {
+  async findOneByUsuarioAndDate(@Param('id') id: string) {
     const userId = parseInt(id, 10); // Converte o id para número
-    return this.dadosdiarioService.findOneCode(userId);
+    const hoje = new Date();
+    hoje.setHours(0, 0, 0, 0);
+    return this.dadosdiarioService.findOneByUsuarioAndDate(userId, hoje);
   }
-  
+
   @Get()
   async showall(){
     return this.dadosdiarioService.showall();
