@@ -31,13 +31,14 @@ model DadosDiario {
   codigo Int @default(autoincrement()) @id
   agua_consumida Float
   peso_atual Float
+  tempo_exercicio Int? // Tornar opcional
+  calorias_consumidas Int? // Tornar opcional
+  frequencia_academia Int? // Tornar opcional
   usuario Users @relation(fields: [codigo_usuario], references: [codigo])
   codigo_usuario Int 
-<<<<<<< Updated upstream
   data_atual DateTime @default(now())
-=======
-  data_atual DateTime @default(now()) @unique
->>>>>>> Stashed changes
+
+  @@unique([codigo_usuario, data_atual])
 
   @@map("dados_diario")
 }

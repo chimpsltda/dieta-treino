@@ -54,12 +54,4 @@ export class UsersService {
   async showall(){
     return this.databaseservice.users.findMany()
   }
-
-  async showall(){
-    return this.databaseservice.users.findMany()
-  }
-
-  async showall(){
-    return this.databaseservice.users.findMany()
-  }
 }
