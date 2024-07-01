@@ -39,4 +39,3 @@ export class DadosDiarioController {
     return this.dadosdiarioService.showall();
   }
 }
-

@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Prisma, DadosDiario } from '@prisma/client';
 import { DatabaseService } from 'src/database/database.service';
 import { CreateDadoDiarioDTO } from './dto/create.dados.diario.dto';
-import { UpdateDadoDiarioDto } from './dto/update.dados.diairo.dto';
+import { UpdateDadoDiarioDto } from './dto/update.dados.diario.dto';
 
 @Injectable()
 export class DadosDiarioService {
@@ -36,23 +36,6 @@ export class DadosDiarioService {
     });
   }
 
-  async findOneData(data_atual: Date): Promise<DadosDiario | null> {
-    const data = new Date(data_atual);
-    data.setHours(0, 0, 0, 0);
-    return this.databaseservice.dadosDiario.findFirst({
-      where: {
-        data_atual: data,
-      },
-    });
-  }
-
-  async update(codigo: number, updateDadoDiarioDto: UpdateDadoDiarioDto): Promise<DadosDiario> {
-    return this.databaseservice.dadosDiario.update({
-      where: { codigo },
-      data: updateDadoDiarioDto,
-    });
-  }
-
   async updateByEmail(email: string, updateDadoDiarioDto: UpdateDadoDiarioDto): Promise<DadosDiario> {
     const hoje = new Date();
     hoje.setHours(0, 0, 0, 0);
@@ -66,12 +49,6 @@ export class DadosDiarioService {
     return this.databaseservice.dadosDiario.update({
       where: { codigo: dadosDiario.codigo },
       data: updateDadoDiarioDto,
-    });
-  }
-
-  async remove(codigo: number): Promise<DadosDiario> {
-    return this.databaseservice.dadosDiario.delete({
-      where: { codigo },
     });
   }
 
