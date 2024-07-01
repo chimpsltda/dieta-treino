@@ -11,8 +11,11 @@ async function bootstrap() {
         allowedHeaders: 'Content-Type, Authorization',
     });
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     await app.listen(4000);
 =======
+=======
+>>>>>>> Stashed changes
     await app.listen(3000);
 >>>>>>> Stashed changes
 }

@@ -22,5 +22,18 @@ model Users{
   senha String
   datahora_criado DateTime @default(now())
   datahora_atualizado DateTime @updatedAt
+
+  dadosdiario DadosDiario []
   @@map("users")
+}
+
+model DadosDiario {
+  codigo Int @default(autoincrement()) @id
+  agua_consumida Float
+  peso_atual Float
+  usuario Users @relation(fields: [codigo_usuario], references: [codigo])
+  codigo_usuario Int 
+  data_atual DateTime @default(now())
+
+  @@map("dados_diario")
 }

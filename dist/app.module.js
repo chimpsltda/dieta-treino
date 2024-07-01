@@ -13,6 +13,7 @@ const database_module_1 = require("./database/database.module");
 const auth_module_1 = require("./auth/auth.module");
 const jwt_1 = require("@nestjs/jwt");
 const constants_1 = require("./auth/constants");
+const dados_diario_module_1 = require("./dados_diario/dados.diario.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -22,6 +23,7 @@ exports.AppModule = AppModule = __decorate([
             users_module_1.UsersModule,
             database_module_1.DatabaseModule,
             auth_module_1.AuthModule,
+            dados_diario_module_1.DadosDiarioModule,
             jwt_1.JwtModule.register({
                 global: true,
                 secret: constants_1.jwtConstants.secret,
