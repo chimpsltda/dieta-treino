@@ -58,4 +58,9 @@ export class UsersController {
     const userId = payload.sub;
     return this.usersService.remove(userId);
   }
+
+  @Get()
+  async showall(){
+    return this.usersService.showall();
+  }
 }

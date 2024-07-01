@@ -53,6 +53,9 @@ let UsersService = class UsersService {
             },
         });
     }
+    async showall() {
+        return this.databaseservice.users.findMany();
+    }
 };
 exports.UsersService = UsersService;
 exports.UsersService = UsersService = __decorate([

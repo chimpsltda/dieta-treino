@@ -61,6 +61,9 @@ let UsersController = class UsersController {
         const userId = payload.sub;
         return this.usersService.remove(userId);
     }
+    async showall() {
+        return this.usersService.showall();
+    }
 };
 exports.UsersController = UsersController;
 __decorate([
@@ -98,6 +101,12 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], UsersController.prototype, "remove", null);
+__decorate([
+    (0, common_1.Get)(),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], UsersController.prototype, "showall", null);
 exports.UsersController = UsersController = __decorate([
     (0, common_1.Controller)('users'),
     __metadata("design:paramtypes", [users_service_1.UsersService,

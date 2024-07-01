@@ -3,8 +3,6 @@ import { UsersService } from 'src/users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import { LoginAuthDTO } from './dto/login.auth.dto';
 import { jwtConstants } from './constants';
-import { createCipheriv, createDecipheriv, randomBytes, scrypt } from 'crypto';
-import { promisify } from 'util';
 
 @Injectable()
 export class AuthService {

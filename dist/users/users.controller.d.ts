@@ -43,4 +43,12 @@ export declare class UsersController {
         datahora_criado: Date;
         datahora_atualizado: Date;
     }>;
+    showall(): Promise<{
+        codigo: number;
+        nome: string;
+        email: string;
+        senha: string;
+        datahora_criado: Date;
+        datahora_atualizado: Date;
+    }[]>;
 }
