@@ -48,6 +48,9 @@ export declare class UsersService {
         datahora_atualizado: Date;
     }[]>;
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes

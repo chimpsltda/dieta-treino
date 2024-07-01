@@ -33,7 +33,11 @@ model DadosDiario {
   peso_atual Float
   usuario Users @relation(fields: [codigo_usuario], references: [codigo])
   codigo_usuario Int 
+<<<<<<< Updated upstream
   data_atual DateTime @default(now())
+=======
+  data_atual DateTime @default(now()) @unique
+>>>>>>> Stashed changes
 
   @@map("dados_diario")
 }
