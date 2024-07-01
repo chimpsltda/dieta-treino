@@ -53,6 +53,22 @@ export class DadosDiarioService {
     });
   }
 
+  async updateByEmail(email: string, updateDadoDiarioDto: UpdateDadoDiarioDto): Promise<DadosDiario> {
+    const hoje = new Date();
+    hoje.setHours(0, 0, 0, 0);
+
+    const dadosDiario = await this.findOneByEmailAndDate(email, hoje);
+
+    if (!dadosDiario) {
+      throw new Error('Dados diarios não encontrados para este email.');
+    }
+
+    return this.databaseservice.dadosDiario.update({
+      where: { codigo: dadosDiario.codigo },
+      data: updateDadoDiarioDto,
+    });
+  }
+
   async remove(codigo: number): Promise<DadosDiario> {
     return this.databaseservice.dadosDiario.delete({
       where: { codigo },
