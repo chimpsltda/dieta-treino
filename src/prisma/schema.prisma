@@ -15,30 +15,30 @@ datasource db {
 
 }
 
-model Users{
-  codigo Int @default(autoincrement()) @id
-  nome String
-  email String @unique
-  senha String
-  datahora_criado DateTime @default(now())
-  datahora_atualizado DateTime @updatedAt
-
-  dadosdiario DadosDiario []
+model Users {
+  codigo              Int          @default(autoincrement()) @id
+  nome                String
+  email               String       @unique
+  senha               String
+  datahora_criado     DateTime     @default(now())
+  datahora_atualizado DateTime     @updatedAt
+  dadosdiario         DadosDiario[]
   @@map("users")
 }
 
 model DadosDiario {
-  codigo Int @default(autoincrement()) @id
-  agua_consumida Float
-  peso_atual Float
-  tempo_exercicio Int
-  calorias_consumidas Int
-  frequencia_academia Int
-  usuario Users @relation(fields: [codigo_usuario], references: [codigo])
-  codigo_usuario Int 
-  data_atual DateTime @default(now())
+  codigo               Int      @default(autoincrement()) @id
+  agua_consumida       Float
+  peso_atual           Float
+  tempo_exercicio      Int?     // Tornar opcional
+  calorias_consumidas  Int?     // Tornar opcional
+  frequencia_academia  Int?     // Tornar opcional
+  email                String   // Email do usuário
+  data_atual           DateTime @default(now())
 
-  @@unique([codigo_usuario, data_atual])
+  usuario              Users    @relation(fields: [email], references: [email])
+
+  @@unique([email, data_atual])
 
   @@map("dados_diario")
 }

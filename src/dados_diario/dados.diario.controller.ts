@@ -10,7 +10,7 @@ export class DadosDiarioController {
 
   @Post()
   async insert(@Body(ValidationPipe) createDadoDiarioDTO: CreateDadoDiarioDTO) {
-    if (!createDadoDiarioDTO.data_atual){
+    if (!createDadoDiarioDTO.data_atual) {
       const hoje = new Date();
       hoje.setHours(0, 0, 0, 0);
       createDadoDiarioDTO.data_atual = hoje;
@@ -18,16 +18,15 @@ export class DadosDiarioController {
     return this.dadosdiarioService.insert(createDadoDiarioDTO);
   }
 
-  @Get(':id')
-  async findOneByUsuarioAndDate(@Param('id') id: string) {
-    const userId = parseInt(id, 10); // Converte o id para número
+  @Get(':email')
+  async findOneByEmailAndDate(@Param('email') email: string) {
     const hoje = new Date();
     hoje.setHours(0, 0, 0, 0);
-    return this.dadosdiarioService.findOneByUsuarioAndDate(userId, hoje);
+    return this.dadosdiarioService.findOneByEmailAndDate(email, hoje);
   }
 
   @Get()
-  async showall(){
+  async showall() {
     return this.dadosdiarioService.showall();
   }
 }

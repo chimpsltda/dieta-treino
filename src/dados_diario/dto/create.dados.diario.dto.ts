@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsDate, IsInt, IsNotEmpty, IsOptional, IsNumber } from "class-validator";
+import { IsDate, IsInt, IsNotEmpty, IsOptional, IsNumber, IsEmail } from "class-validator";
 
 export class CreateDadoDiarioDTO {
   @ApiProperty({ required: false })
@@ -20,16 +20,6 @@ export class CreateDadoDiarioDTO {
   @ApiProperty()
   @IsNotEmpty()
   @IsInt()
-  codigo_usuario: number;
-
-  @ApiProperty({ required: false })
-  @IsOptional()
-  @IsDate()
-  data_atual?: Date;
-
-  @ApiProperty()
-  @IsNotEmpty()
-  @IsInt()
   tempo_exercicio: number;
 
   @ApiProperty()
@@ -41,5 +31,14 @@ export class CreateDadoDiarioDTO {
   @IsNotEmpty()
   @IsInt()
   frequencia_academia: number;
-}
 
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsEmail()
+  email: string;
+
+  @ApiProperty({ required: false })
+  @IsOptional()
+  @IsDate()
+  data_atual?: Date;
+}

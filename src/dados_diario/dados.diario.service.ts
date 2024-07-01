@@ -13,11 +13,11 @@ export class DadosDiarioService {
     data.setHours(0, 0, 0, 0);
     createDadoDiarioDto.data_atual = data;
 
-    const dadosexistente = await this.findOneByUsuarioAndDate(createDadoDiarioDto.codigo_usuario, createDadoDiarioDto.data_atual);
+    const existingData = await this.findOneByEmailAndDate(createDadoDiarioDto.email, createDadoDiarioDto.data_atual);
 
-    if (dadosexistente) {
+    if (existingData) {
       return this.databaseservice.dadosDiario.update({
-        where: { codigo: dadosexistente.codigo },
+        where: { codigo: existingData.codigo },
         data: createDadoDiarioDto,
       });
     } else {
@@ -27,10 +27,10 @@ export class DadosDiarioService {
     }
   }
 
-  async findOneByUsuarioAndDate(codigo_usuario: number, data_atual: Date): Promise<DadosDiario | null> {
+  async findOneByEmailAndDate(email: string, data_atual: Date): Promise<DadosDiario | null> {
     return this.databaseservice.dadosDiario.findFirst({
       where: {
-        codigo_usuario: codigo_usuario,
+        email: email,
         data_atual: data_atual,
       },
     });
