@@ -11,7 +11,22 @@ export declare class UsersController {
     create(createUserDto: CreateUserDTO): Promise<{
         encryptedUser: string;
     }>;
-    findOneCodigo(token: string): Promise<import(".prisma/client").Prisma.UsersWhereUniqueInput>;
+    findAll(): Promise<{
+        codigo: number;
+        nome: string;
+        email: string;
+        senha: string;
+        datahora_criado: Date;
+        datahora_atualizado: Date;
+    }[]>;
+    findOneCodigo(token: string): Promise<{
+        codigo: number;
+        nome: string;
+        email: string;
+        senha: string;
+        datahora_criado: Date;
+        datahora_atualizado: Date;
+    }>;
     update(token: string, updateUserDto: UpdateUserDto): Promise<{
         codigo: number;
         nome: string;

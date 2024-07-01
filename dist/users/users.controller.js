@@ -30,6 +30,9 @@ let UsersController = class UsersController {
         const encryptedUser = this.authService.simpleEncrypt(JSON.stringify(user));
         return { encryptedUser: encodeURIComponent(encryptedUser) };
     }
+    async findAll() {
+        return this.usersService.findAll();
+    }
     async findOneCodigo(token) {
         const decryptedData = this.authService.simpleDecrypt(decodeURIComponent(token));
         console.log('Decrypted Data:', decryptedData);
@@ -67,6 +70,12 @@ __decorate([
     __metadata("design:paramtypes", [create_users_dto_1.CreateUserDTO]),
     __metadata("design:returntype", Promise)
 ], UsersController.prototype, "create", null);
+__decorate([
+    (0, common_1.Get)(),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], UsersController.prototype, "findAll", null);
 __decorate([
     (0, common_1.Get)(':token'),
     __param(0, (0, common_1.Param)('token')),

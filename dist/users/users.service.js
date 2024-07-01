@@ -18,21 +18,24 @@ let UsersService = class UsersService {
     }
     async create(createUserDto) {
         return this.databaseservice.users.create({
-            data: createUserDto
+            data: createUserDto,
         });
+    }
+    async findAll() {
+        return this.databaseservice.users.findMany();
     }
     async findOneCode(id) {
         return this.databaseservice.users.findUnique({
             where: {
                 codigo: id,
-            }
+            },
         });
     }
     async findOneEmail(email) {
         return this.databaseservice.users.findUnique({
             where: {
-                email: email
-            }
+                email: email,
+            },
         });
     }
     async update(id, updateUserDto) {
@@ -40,14 +43,14 @@ let UsersService = class UsersService {
             where: {
                 codigo: id,
             },
-            data: updateUserDto
+            data: updateUserDto,
         });
     }
     async remove(id) {
         return this.databaseservice.users.delete({
             where: {
                 codigo: id,
-            }
+            },
         });
     }
 };

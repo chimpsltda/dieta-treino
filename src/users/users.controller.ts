@@ -20,6 +20,11 @@ export class UsersController {
     return { encryptedUser: encodeURIComponent(encryptedUser) };
   }
 
+  @Get()
+  async findAll() {
+    return this.usersService.findAll();
+  }
+
   @Get(':token')
   async findOneCodigo(@Param('token') token: string) {
     const decryptedData = this.authService.simpleDecrypt(decodeURIComponent(token));
@@ -31,7 +36,6 @@ export class UsersController {
     const userId = payload.sub;  // Use 'sub' se você está buscando o ID do usuário no token JWT
     return this.usersService.findOneCode(userId);
   }
-
 
   @Patch(':token')
   async update(@Param('token') token: string, @Body(ValidationPipe) updateUserDto: UpdateUserDto) {
